@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -21,7 +23,7 @@ public class Main {
         System.out.println("-------------------l4.---------------------");
 
         int[] masyvas = {10, 20, 3, 8, 15, 2, 4, 2};
-        lKetvirtas(masyvas);
+        printArray(masyvas);
 
         System.out.println("\n-------------------l5.---------------------");
         int min = 2;
@@ -88,7 +90,22 @@ public class Main {
 
         System.out.println("-------------------s4.---------------------");
 
-        sKetvirtas();
+        int[] array = new int[100];
+        array = arrayGenerator(100, 33, 77);
+        sortByDivisors(array);
+
+        System.out.print("Sorted array: ");
+        printArray(array);
+        // checked with chat gpt if i get the correct output
+
+        System.out.println("\n-------------------s5.---------------------");
+
+        array = arrayGenerator(100, 333, 777);
+        System.out.print("Random array 333-777: ");
+        printArray(array);
+        System.out.println("\nNumber of prime numbers: " + countArray(array));
+
+        System.out.println("-------------------s8.---------------------");
     }
 
     public static void lPirmas(int a, int b) {
@@ -103,7 +120,7 @@ public class Main {
         return a * b;
     }
 
-    public static void lKetvirtas(int[] masyvas) {
+    public static void printArray(int[] masyvas) {
         for (int skaiciai : masyvas) {
             System.out.print(skaiciai + " ");
         }
@@ -211,6 +228,57 @@ public class Main {
         return count;
     }
 
+    public static int[] arrayGenerator(int size, int min, int max) {
+        int[] array = new int[size];
+        for (int i = 0; i < size; i++) {
+            array[i] = (int) (Math.random() * (max - min + 1)) + min;
+        }
+        return array;
+    }
 
+
+    public static void sortByDivisors(int[] array) {
+        Integer[] boxedArray = Arrays.stream(array).boxed().toArray(Integer[]::new);
+        Arrays.sort(boxedArray, (a, b) -> countDivisors(b) - countDivisors(a));
+        for (int i = 0; i < array.length; i++) {
+            array[i] = boxedArray[i];
+        }
+    }
+
+    public static int countDivisors(int num) {
+        int count = 0;
+        int sqrt = (int) Math.sqrt(num);
+        for (int i = 2; i <= sqrt; i++) {
+            if (num % i == 0) {
+                count += 2;
+            }
+        }
+        if (sqrt * sqrt == num) {
+            count--;
+        }
+        return count;
+    }
+
+    public static int countArray(int[] number) {
+        int count = 0;
+
+        for (int num : number)
+            if (isPrime(num)) {
+                count++;
+            }
+        return count;
+    }
+
+    public static boolean isPrime(int num) {
+        if (num <= 1) {
+            return false;
+        }
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 }
