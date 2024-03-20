@@ -96,16 +96,31 @@ public class Main {
 
         System.out.print("Sorted array: ");
         printArray(array);
-        // checked with chat gpt if i get the correct output
+        // checked with chat gpt if i get the correct output / works
 
         System.out.println("\n-------------------s5.---------------------");
 
         array = arrayGenerator(100, 333, 777);
         System.out.print("Random array 333-777: ");
         printArray(array);
-        System.out.println("\nNumber of prime numbers: " + countArray(array));
+        System.out.println("\nNumber of prime numbers: " + countArray(array)); //checked with chat gpt / works
 
         System.out.println("-------------------s8.---------------------");
+
+        int[] ar = arrayGenerator(3, 1, 33);
+        while (!areLastThreePrimes(ar)) {
+            int[] newArray = new int[ar.length + 1];
+            for (int i = 0; i < ar.length; i++) {
+                newArray[i] = ar[i];
+            }
+            newArray[newArray.length - 1] = (int) (Math.random() * 33) + 1;
+            ar = newArray;
+        }
+        System.out.print("Final array: ");
+        printArray(ar);
+
+        System.out.println("-------------------s9.---------------------");
+
     }
 
     public static void lPirmas(int a, int b) {
@@ -279,6 +294,16 @@ public class Main {
             }
         }
         return true;
+    }
+
+    public static boolean areLastThreePrimes(int[] array) {
+        int count = 0;
+        for (int i = array.length - 3; i < array.length; i++) {
+            if (isPrime(array[i])) {
+                count++;
+            }
+        }
+        return count == 3;
     }
 
 }
